@@ -1,0 +1,9 @@
+<div class="world-row">
+<%= for x <- 0..(@size - 1) do %>
+    <div class="world-column">
+        <%= for y <- 0..(@size - 1) do %>
+            <div class="cell-<%= Atom.to_string(Conway.get_elem_at(@world, x, y)) %>" style="width: <%= 70/@size %>vw; height: <%= 70/@size %>vh;"></div>
+        <% end %>
+    </div>
+<% end %>
+</div>

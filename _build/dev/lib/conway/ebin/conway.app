@@ -1,0 +1,9 @@
+{application,conway,
+             [{applications,[kernel,stdlib,elixir,logger]},
+              {description,"conway"},
+              {modules,['Elixir.Conway','Elixir.Conway.Application',
+                        'Elixir.Conway.DynamicWorlds','Elixir.Conway.World',
+                        'Elixir.Conway.WorldServer']},
+              {registered,[]},
+              {vsn,"0.1.0"},
+              {mod,{'Elixir.Conway.Application',[]}}]}.
