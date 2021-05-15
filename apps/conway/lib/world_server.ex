@@ -22,6 +22,10 @@ defmodule Conway.WorldServer do
     GenServer.call(name, {:view_world})
   end
 
+  def change_world(name, state, x, y) do
+    GenServer.call(name, {:change_world, state, x, y})
+  end
+
 
   # Server (callbacks)
 
@@ -41,6 +45,16 @@ defmodule Conway.WorldServer do
   @impl true
   def handle_call({:view_world}, _from, current_world = %World{}) do
     {:reply, current_world, current_world}
+  end
+
+  @impl true
+  def handle_call({:change_world, state, x, y}, _from, current_world = %World{}) do
+    case Conway.change_elem_at(current_world, state, x, y) do
+      {:ok, next_world} ->
+        {:reply, next_world, next_world}
+      {:error, old_world} ->
+        {:reply, old_world, old_world}
+    end
   end
 
   @impl true

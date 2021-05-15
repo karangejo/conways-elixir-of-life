@@ -2,8 +2,28 @@
 <%= for x <- 0..(@size - 1) do %>
     <div class="world-column">
         <%= for y <- 0..(@size - 1) do %>
-            <div class="cell-<%= Atom.to_string(Conway.get_elem_at(@world, x, y)) %>" style="width: <%= 70/@size %>vw; height: <%= 70/@size %>vh;"></div>
+            <% state = Atom.to_string(Conway.get_elem_at(@world, x, y)) %>
+            <% bg = if state == "alive", do: @alive_color, else: @dead_color %>
+            <div
+                class="cell-<%= state %>"
+                style="width: <%= 70/@size %>vw; height: <%= 70/@size %>vh; background-color: <%= bg %>"
+                phx-click="toggle_cell"
+                phx-value-x="<%= x %>"
+                phx-value-y="<%= y %>"
+                phx-value-state="<%= state %>"
+            >
+            </div>
         <% end %>
     </div>
 <% end %>
 </div>
+<button phx-click="play">Play</button>
+<button phx-click="pause">Pause</button>
+<%= f = form_for :alive_color, "#", [phx_change: :change_alive_color]%>
+    <%= label f, :color, "Alive Color" %>
+    <%= color_input f, :color_input, value: @alive_color %>
+</form>
+<%= f = form_for :dead_color, "#", [phx_change: :change_dead_color]%>
+    <%= label f, :color, "Dead Color" %>
+    <%= color_input f, :color_input, value: @dead_color %>
+</form>

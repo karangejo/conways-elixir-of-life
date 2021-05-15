@@ -9,7 +9,8 @@ defmodule Conway do
     world =
       Enum.map(1..size, fn _ ->
         Enum.map(1..size, fn _ ->
-          Enum.random([:alive, :dead])
+          #Enum.random([:alive, :dead])
+          :dead
         end)
         |> List.to_tuple()
       end)
@@ -116,6 +117,18 @@ defmodule Conway do
         |> elem(y)
       false ->
         nil
+    end
+  end
+
+  def change_elem_at(world = %World{}, state, x, y) when state == :dead or state == :alive do
+    case valid_indexes(world.size, x, y) do
+      true ->
+        column = elem(world.world, x)
+        new_column = put_elem(column, y, state)
+        new_world = put_elem(world.world, x, new_column)
+        {:ok, %World{world | world: new_world}}
+      false ->
+        {:error, world}
     end
   end
 
