@@ -19,6 +19,7 @@
 </div>
 <button phx-click="play">Play</button>
 <button phx-click="pause">Pause</button>
+<button phx-click="reset">Reset</button>
 <%= f = form_for :alive_color, "#", [phx_change: :change_alive_color]%>
     <%= label f, :color, "Alive Color" %>
     <%= color_input f, :color_input, value: @alive_color %>

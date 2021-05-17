@@ -22,6 +22,10 @@ defmodule Conway.WorldServer do
     GenServer.call(name, {:view_world})
   end
 
+  def reset_world(name) do
+    GenServer.call(name, {:reset_world})
+  end
+
   def change_world(name, state, x, y) do
     GenServer.call(name, {:change_world, state, x, y})
   end
@@ -45,6 +49,12 @@ defmodule Conway.WorldServer do
   @impl true
   def handle_call({:view_world}, _from, current_world = %World{}) do
     {:reply, current_world, current_world}
+  end
+
+  @impl true
+  def handle_call({:reset_world}, _from, %World{size: size}) do
+    reset_world = Conway.make_world(size)
+    {:reply, reset_world, reset_world}
   end
 
   @impl true

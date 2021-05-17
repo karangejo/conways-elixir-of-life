@@ -19,4 +19,6 @@ defmodule Conway.DynamicWorlds do
 
   defdelegate change_world(name, state, x, y), to: WorldServer
 
+  defdelegate reset_world(name), to: WorldServer
+
 end
